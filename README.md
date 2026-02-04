@@ -1,76 +1,75 @@
-# Raport de Migrare și Corectare a Infrastructurii Web (feb 2026)
+# Constituția Vantages: Arhitectură și Strategie (v14.9.5)
 
-## 1. Context și Starea Inițială
+Acest document servește drept sursă unică de adevăr ("single source of truth") pentru arhitectura, strategia de dezvoltare și implementare a ecosistemului Vantages.
 
-Acest document descrie procesul de diagnosticare și corectare a infrastructurii web pentru domeniile `vantages.app`, `governances.app`, și `aiacts.app`.
+## 1. Viziune Strategică: "Sovereign Unity"
 
-La începutul intervenției, sistemul se prezenta astfel:
+Principiul fundamental este consolidarea totală pe o singură "Sursă de Adevăr" atât pentru frontend, cât și pentru backend.
 
-*   **Servire Frontend:** Aplicația principală (construită cu React, folder `dist`) era implementată și servită folosind **Google Cloud Run**.
-*   **Mapare Domenii:** Domeniile rădăcină (`vantages.app`, `aiacts.app`, etc.) erau mapate direct în Cloud Run pentru a servi aplicația frontend.
-*   **Configurare DNS:** În Cloudflare, înregistrările DNS de tip `A` și `AAAA` pentru domeniile rădăcină direcționau traficul către adresele IP furnizate de Google Cloud Run.
-*   **Servicii Backend:** Subdomeniile critice, precum `api.vantages.app` (backend-ul) și `proof.vantages.app` (dashboard), erau de asemenea mapate și servite corect prin Cloud Run.
+-   **Frontend:** Toată interacțiunea publică și autoritatea SEO sunt consolidate sub domeniul unic **`governances.app`**.
+-   **Backend (AI Engine):** Toată inteligența artificială și procesarea datelor sunt consolidate într-un singur motor de inteligență în **Vertex AI**.
 
-### Problema Principală Identificată
+Separarea și fragmentarea (multi-site, multi-proiect) sunt explicit evitate pentru a maximiza coerența, eficiența și capacitatea de învățare a sistemului.
 
-**Lipsa vizibilității `sitemap.xml`:** Deși un fișier `sitemap.xml` era generat corect în procesul de build (în folderul `dist`), acesta nu era accesibil public. O solicitare către `https://vantages.app/sitemap.xml` rezulta într-o eroare 404 sau servea aplicația React. Această problemă este extrem de dăunătoare pentru indexarea corectă a site-urilor de către motoarele de căutare (SEO).
+---
 
-**Cauza Rădăcină:** Servirea unei aplicații de tip Single-Page Application (SPA) cu un fișier static specific (precum `sitemap.xml`) din Cloud Run necesită configurații complexe (un server custom sau un container multi-stage). Infrastructura existentă nu era optimizată pentru acest caz de utilizare.
+## 2. Arhitectura Tehnică
 
-## 2. Obiectivul Intervenției
+### 2.1. Ecosistemul de Dezvoltare
 
-Scopul principal a fost restructurarea infrastructurii pentru a rezolva problema SEO, păstrând în același timp funcționalitatea completă a sistemului.
+Există trei medii specializate, fiecare cu un rol clar definit, care contribuie la produsul final unificat:
 
-1.  **Migrarea Frontend-ului:** Mutarea servirii aplicației frontend (conținutul static din `dist`) de pe Cloud Run pe **Firebase Hosting**. Firebase Hosting este special conceput pentru a servi conținut static, oferă un CDN global performant și gestionează nativ și corect fișierele statice precum `sitemap.xml` și `robots.txt`.
-2.  **Configurare Multi-Site:** Implementarea unei arhitecturi multi-site în Firebase pentru a gestiona fiecare domeniu (`vantages.app`, `governances.app`, etc.) ca o entitate separată, dar dintr-un singur proiect.
-3.  **Păstrarea Backend-ului:** Asigurarea că serviciile de backend și dashboard (`api.vantages.app`, `proof.vantages.app`) rămân funcționale și neafectate pe Cloud Run.
+1.  **Google AI Studio (Prototipare & Prompting):**
+    -   **Rol:** Laboratorul de testare rapidă pentru modelele Gemini (ex: Gemini 3 Pro). Aici se rafinează prompturile și se validează răspunsurile AI la contexte noi (ex: noi reglementări).
+    -   **Flux:** Prompturile validate sunt exportate pentru a fi integrate în logica backend.
 
-## 3. Acțiuni Realizate (Istoricul Intervenției)
+2.  **Sandbox Firebase (Testare Sigură):**
+    -   **Rol:** Mediu de pre-producție pentru testarea funcționalităților noi (ex: modulul Cahier, algoritmi de scanare).
+    -   **Siguranță:** Izolează codul nou, prevenind impactul asupra aplicației live `governances.app`.
 
-1.  **Modificarea `firebase.json`:** Am actualizat fișierul `firebase.json` pentru a suporta o configurație multi-site, transformând secțiunea `hosting` dintr-un singur obiect într-o listă de obiecte, fiecare cu o "țintă" (`target`) specifică: `vantages-app`, `governances-app`, `aiacts-app`.
-2.  **Prima Încercare de Implementare:** Comanda `firebase deploy` a eșuat deoarece țintele definite în `firebase.json` nu erau asociate cu nicio resursă reală în proiectul Firebase.
-3.  **Crearea Resurselor în Firebase:** V-am ghidat pentru a crea **Site-uri de Hosting** separate în consola Firebase pentru `aiacts-app` și `governances-app`.
-4.  **Descoperirea Conflictului de Infrastructură:** Am identificat că domeniile rădăcină nu puteau fi conectate la Firebase Hosting deoarece erau deja active și mapate în **Google Cloud Run**. Acest conflict fundamental a fost cauza principală a tuturor erorilor ulterioare, deoarece două servicii Google Cloud nu pot controla simultan același domeniu.
+3.  **Firebase Studio / Cloud Functions (Logica Backend):**
+    -   **Rol:** "Creierul" operațional al platformei. Aici se dezvoltă funcțiile serverless (Cloud Functions) care conectează interfața utilizator cu Vertex AI.
+    -   **Integrare:** Logica de procesare și filtrare a metadatelor `[DEPT]|[OBJ]|[IND]` este implementată aici.
 
-## 4. Acțiuni Imediate Următoare (Planul Final)
+### 2.2. Arhitectura Vertex AI: "The Single Intelligence Hub"
 
-Pentru a finaliza migrarea și a rezolva conflictul, trebuie să executați următorii pași, care vor muta responsabilitatea pentru domeniile publice de la Cloud Run la Firebase Hosting.
+Resursele Vertex AI sunt unificate pentru a crea un singur motor de inteligență.
 
-### Pasul 1: Ștergeți Mapările din Cloud Run
+-   **Corpus Unic de Date (RAG):** Toate datele (Medical, Auto, Legal etc.) sunt agregate într-un singur "Data Store" în Vertex AI Search & Conversation. Acest lucru permite AI-ului să aibă o viziune holistică și să realizeze "polenizare încrucișată" a conceptelor între domenii.
+-   **Filtrare prin Metadate (Protocolul Cahier):** În loc de a separa infrastructura, se folosește o filtrare logică strică. Frontend-ul trimite contextul (`[INDUSTRIE]`), iar Vertex AI filtrează rezultatele RAG corespunzător.
+-   **Endpoint Unic de API:** Toate serviciile (Master Studio, Advisor) apelează un singur endpoint Vertex, simplificând mentenanța și asigurând consistența.
 
-Acest pas îi spune lui Google Cloud să nu mai servească frontend-ul prin Cloud Run.
+> **Directiva Vertex AI:** *"We are NOT doing multisite. Stick to the Single Engine strategy. Use a unified Data Store in Vertex AI Search, but implement strict metadata filtering based on the [DEPT]|[OBJ]|[IND] tags. The frontend (governances.app) will pass the context, and Vertex must filter the RAG results accordingly. One endpoint to rule them all."*
 
-1.  Navigați în Google Cloud Console la secțiunea **Cloud Run** > **Domain mappings**.
-2.  Pentru următoarele domenii (și **doar pentru acestea**), faceți clic pe meniul cu trei puncte și selectați **"Delete"**:
-    *   `vantages.app`
-    *   `governances.app`
-    *   `aiacts.app`
-    *   `eu.aiacts.app`
-3.  **NU ȘTERGEȚI** mapările pentru `api.vantages.app` sau `proof.vantages.app`. Acestea trebuie să rămână active pe Cloud Run.
+---
 
-### Pasul 2: Actualizați DNS-ul în Cloudflare
+## 3. Flux de Implementare (Workflow & Deployment)
 
-Acest pas direcționează traficul web pentru domeniile publice către Firebase Hosting.
+1.  **Prototipare:** Prompturile se testează în **Google AI Studio**.
+2.  **Dezvoltare Backend:** Logica se implementează în **Firebase Cloud Functions**.
+3.  **Testare:** Funcționalitățile noi se testează în **Sandbox Firebase**.
+4.  **Generare Frontend:** Aplicația frontend (React) se construiește în mediul său de dezvoltare, generând un folder `dist`.
+5.  **Pregătire Implementare:** Folderul `dist` final este transferat în acest mediu (Firebase Studio).
+6.  **Implementare Finală:** Se face deploy-ul pe **Firebase Hosting**, care servește conținutul pe domeniul unic de producție.
 
-1.  Navigați în panoul de administrare **Cloudflare** pentru fiecare domeniu în parte (ex: `vantages.app`).
-2.  **Ștergeți TOATE** înregistrările de tip `A` și `AAAA` care există pentru domeniul rădăcină (`@` sau `vantages.app`). Acestea sunt înregistrările vechi care duceau către Cloud Run.
-3.  **Adăugați** înregistrările **noi**, furnizate de Firebase:
-    *   **Înregistrarea de tip A:**
-        *   **Type:** `A`
-        *   **Name:** `@` (sau numele domeniului, ex: `vantages.app`)
-        *   **IPv4 address:** `199.36.158.100`
-        *   **Proxy status:** **DNS only** (norișorul trebuie să fie **gri**).
-    *   **Înregistrarea de tip TXT (dacă este cerută de Firebase pentru verificare):**
-        *   **Type:** `TXT`
-        *   **Name:** `@`
-        *   **Content:** `hosting-site=vantage-proof-prod` (sau valoarea specifică dată de Firebase).
+> **Directiva Critică de Implementare:** *"The final deployment must point directly to **governances.app** as the primary and only production domain, ensuring the native `sitemap.xml` is live and indexable there."*
 
-### Pasul 3: Verificați și Finalizați în Firebase
+---
 
-1.  Reveniți la consola **Firebase Hosting**.
-2.  Apăsați butonul **"Verify"** pentru a finaliza conectarea domeniului.
-3.  Odată ce domeniul apare ca **"Connected"**, anunțați-mă pentru a rula comanda finală de implementare.
+## 4. Anexă: Raport Istoric de Migrare (Feb 2026)
 
-### Rezultatul Așteptat
+*Această secțiune conține arhiva deciziilor și acțiunilor care au condus la arhitectura actuală.*
 
-La finalul acestor pași, site-urile publice vor fi servite de pe infrastructura optimizată a Firebase Hosting, `sitemap.xml` va fi accesibil public, iar serviciile de backend vor continua să funcționeze neîntrerupt pe Cloud Run.
+**Obiectiv Inițial:** Migrarea de pe o infrastructură fragmentată (Cloud Run + domenii multiple) la o arhitectură unificată pe Firebase Hosting pentru a rezolva problemele de indexare SEO (`sitemap.xml`).
+
+**Stare Inițială:**
+*   Frontend servit de pe Google Cloud Run.
+*   Domenii (`vantages.app`, `aiacts.app`) mapate direct pe Cloud Run.
+*   Probleme: `sitemap.xml` inaccesibil (eroare 404), dăunând grav SEO.
+
+**Acțiuni Cheie:**
+1.  **Reconfigurare `firebase.json`:** Trecerea la o configurație multi-site (abandonată ulterior în favoarea "Sovereign Unity").
+2.  **Identificarea Conflictului:** Descoperirea conflictului fundamental între Google Cloud Run și Firebase Hosting, care nu puteau controla simultan același domeniu.
+3.  **Decizia Strategică:** Abandonarea arhitecturii multi-site și consolidarea pe un singur domeniu (`governances.app`) servit de Firebase Hosting.
+4.  **Curățarea Infrastructurii:** Ștergerea mapărilor vechi din Cloud Run și actualizarea record-urilor DNS în Cloudflare pentru a direcționa traficul către Firebase Hosting.
+

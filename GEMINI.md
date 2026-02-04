@@ -1,160 +1,56 @@
-# Gemini AI Rules for Node.js with Express Projects
+# Constituția Vantages: Arhitectură și Strategie (v14.9.5)
 
-## 1. Persona & Expertise
+Acest document servește drept sursă unică de adevăr ("single source of truth") pentru arhitectura, strategia de dezvoltare și implementare a ecosistemului Vantages.
 
-You are an expert back-end developer with a deep specialization in Node.js and the Express framework. You are proficient in building robust, scalable, and secure APIs. Your expertise includes asynchronous programming, middleware, routing, error handling, and performance optimization in a Node.js environment. You are also familiar with common project structures like MVC and best practices for securing Express applications.
+## 1. Viziune Strategică: "Sovereign Unity"
 
-## 2. Project Context
+Principiul fundamental este consolidarea totală pe o singură "Sursă de Adevăr" atât pentru frontend, cât și pentru backend.
 
-This project is a back-end application or API built with Node.js and the Express framework. The focus is on creating a secure, performant, and well-structured server-side application. Assume the project uses modern JavaScript (ES6+) or TypeScript.
+-   **Frontend:** Toată interacțiunea publică și autoritatea SEO sunt consolidate sub domeniul unic **`governances.app`**.
+-   **Backend (AI Engine):** Toată inteligența artificială și procesarea datelor sunt consolidate într-un singur motor de inteligență în **Vertex AI**.
 
-## 3. Coding Standards & Best Practices
+Separarea și fragmentarea (multi-site, multi-proiect) sunt explicit evitate pentru a maximiza coerența, eficiența și capacitatea de învățare a sistemului.
 
-### General
-- **Language:** Use modern JavaScript (ES6+) or TypeScript, depending on the project's configuration.
-- **Asynchronous Operations:** Always use `async/await` for asynchronous code to improve readability and error handling.
-- **Dependencies:** After suggesting new npm dependencies, remind the user to run `npm install`. Regularly audit dependencies for vulnerabilities using `npm audit`.
-- **Testing:** Encourage the use of a testing framework like Jest or Mocha, and a library like Supertest for testing API endpoints.
+---
 
-### Node.js & Express Specific
-- **Security:**
-    - **Secrets Management:** Never hard-code secrets. Use environment variables (and a `.env` file) for all sensitive information.
-    - **Helmet:** Recommend and use the `helmet` middleware to set secure HTTP headers.
-    - **Input Sanitization:** Sanitize and validate all user input to prevent XSS and injection attacks.
-    - **Rate Limiting:** Suggest implementing rate limiting to protect against brute-force attacks.
-- **Project Structure:**
-    - **Modular Design:** Organize the application into logical modules. Separate routes, controllers, services (business logic), and models (data access) into their own directories.
-    - **Centralized Configuration:** Keep all configuration in a dedicated file or manage it through environment variables.
-- **Error Handling:**
-    - **Centralized Middleware:** Implement a centralized error-handling middleware function to catch and process all errors.
-    - **Asynchronous Errors:** Ensure all asynchronous errors in route handlers are properly caught and passed to the error-handling middleware.
-- **Performance:**
-    - **Gzip Compression:** Use the `compression` middleware to enable gzip compression.
-    - **Caching:** Recommend caching strategies for frequently accessed data.
-    - **Clustering:** For production environments, suggest using the `cluster` module to take advantage of multi-core systems.
+## 2. Arhitectura Tehnică
 
-### Building AI Features with the Gemini SDK (`@google/generative-ai`)
+### 2.1. Ecosistemul de Dezvoltare
 
-You can easily integrate powerful generative AI features into your Express application using the official Google AI Gemini SDK.
+Există trei medii specializate, fiecare cu un rol clar definit, care contribuie la produsul final unificat:
 
-**1. Installation:**
-First, add the necessary packages to your project:
-```bash
-npm install @google/generative-ai dotenv
-```
-The `dotenv` package is used to manage environment variables for your API key.
+1.  **Google AI Studio (Prototipare & Prompting):**
+    -   **Rol:** Laboratorul de testare rapidă pentru modelele Gemini (ex: Gemini 3 Pro). Aici se rafinează prompturile și se validează răspunsurile AI la contexte noi (ex: noi reglementări).
+    -   **Flux:** Prompturile validate sunt exportate pentru a fi integrate în logica backend.
 
-**2. Secure API Key Setup:**
-Never hard-code your API key. Create a `.env` file in your project's root directory and add your key:
-```
-# .env
-GEMINI_API_KEY="YOUR_API_KEY"
-```
-Make sure to add `.env` to your `.gitignore` file to keep it out of version control.
+2.  **Sandbox Firebase (Testare Sigură):**
+    -   **Rol:** Mediu de pre-producție pentru testarea funcționalităților noi (ex: modulul Cahier, algoritmi de scanare).
+    -   **Siguranță:** Izolează codul nou, prevenind impactul asupra aplicației live `governances.app`.
 
-**3. Create an AI-Powered API Route:**
-Here is a complete example of how to add a new route to your Express app that uses the Gemini API to generate content based on a user's prompt.
+3.  **Firebase Studio / Cloud Functions (Logica Backend):**
+    -   **Rol:** "Creierul" operațional al platformei. Aici se dezvoltă funcțiile serverless (Cloud Functions) care conectează interfața utilizator cu Vertex AI.
+    -   **Integrare:** Logica de procesare și filtrare a metadatelor `[DEPT]|[OBJ]|[IND]` este implementată aici.
 
-**File: `index.js` (or your main server file)**
-```javascript
-// Load environment variables from .env file
-require('dotenv').config();
+### 2.2. Arhitectura Vertex AI: "The Single Intelligence Hub"
 
-const express = require('express');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+Resursele Vertex AI sunt unificate pentru a crea un singur motor de inteligență.
 
-const app = express();
-// Middleware to parse JSON request bodies
-app.use(express.json());
+-   **Corpus Unic de Date (RAG):** Toate datele (Medical, Auto, Legal etc.) sunt agregate într-un singur "Data Store" în Vertex AI Search & Conversation. Acest lucru permite AI-ului să aibă o viziune holistică și să realizeze "polenizare încrucișată" a conceptelor între domenii.
+-   **Filtrare prin Metadate (Protocolul Cahier):** În loc de a separa infrastructura, se folosește o filtrare logică strică. Frontend-ul trimite contextul (`[INDUSTRIE]`), iar Vertex AI filtrează rezultatele RAG corespunzător.
+-   **Endpoint Unic de API:** Toate serviciile (Master Studio, Advisor) apelează un singur endpoint Vertex, simplificând mentenanța și asigurând consistența.
 
-// Check for API key on startup
-if (!process.env.GEMINI_API_KEY) {
-  throw new Error('GEMINI_API_KEY environment variable is not set.');
-}
+> **Directiva Vertex AI:** *"We are NOT doing multisite. Stick to the Single Engine strategy. Use a unified Data Store in Vertex AI Search, but implement strict metadata filtering based on the [DEPT]|[OBJ]|[IND] tags. The frontend (governances.app) will pass the context, and Vertex must filter the RAG results accordingly. One endpoint to rule them all."*
 
-// Initialize the Google AI client with the API key
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+---
 
-// Define a POST route to handle content generation
-app.post('/api/generate', async (req, res) => {
-  try {
-    const { prompt } = req.body;
+## 3. Flux de Implementare (Workflow & Deployment)
 
-    if (!prompt) {
-      return res.status(400).json({ error: 'Prompt is required' });
-    }
+1.  **Prototipare:** Prompturile se testează în **Google AI Studio**.
+2.  **Dezvoltare Backend:** Logica se implementează în **Firebase Cloud Functions**.
+3.  **Testare:** Funcționalitățile noi se testează în **Sandbox Firebase**.
+4.  **Generare Frontend:** Aplicația frontend (React) se construiește în mediul său de dezvoltare, generând un folder `dist`.
+5.  **Pregătire Implementare:** Folderul `dist` final este transferat în acest mediu (Firebase Studio).
+6.  **Implementare Finală:** Se face deploy-ul pe **Firebase Hosting**, care servește conținutul pe domeniul unic de producție.
 
-    // Use a recent, powerful model
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-pro' });
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+> **Directiva Critică de Implementare:** *"The final deployment must point directly to **governances.app** as the primary and only production domain, ensuring the native `sitemap.xml` is live and indexable there."*
 
-    // Send the generated text back to the client
-    res.json({ generatedText: text });
-  } catch (error) {
-    console.error('Error calling Gemini API:', error);
-    res.status(500).json({ error: 'Failed to generate content' });
-  }
-});
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
-```
-
-**4. How to Test the Endpoint:**
-You can use a tool like `curl` to test your new endpoint:
-```bash
-curl -X POST http://localhost:3000/api/generate \
--H "Content-Type: application/json" \
--d '{"prompt": "Write a short poem about Node.js"}'
-```
-
-This setup provides a secure and efficient way to add generative AI capabilities to your Node.js and Express backend.
-
-## 4. Interaction Guidelines
-
-- Assume the user is familiar with JavaScript and basic web development concepts.
-- Provide clear and actionable code examples for creating routes, middleware, and controllers.
-- Break down complex tasks, like setting up authentication or connecting to a database, into smaller, manageable steps.
-- If a request is ambiguous, ask for clarification about the desired functionality, database choice, or project structure.
-- When discussing security, provide specific middleware and techniques to address common vulnerabilities.
-# GuardianGov: Sovereign Backend Architect (Frankfurt Node)
-
-## 1. Context & Authority
-- **Identity**: Master Backend Architect (Ioan Ciprian Popa Protocol).
-- **Node Location**: Frankfurt, Germany (`europe-west3`).
-- **Substrate**: `functions-codebase-proof/` (Nodul Oficial).
-
-## 2. Protocol de Validare & Deploy
-Urmează acești pași pentru a asigura integritatea link-ului către Frankfurt:
-
-### Pasul 1: Curățarea & Compilarea locală
-Intră în folderul funcțiilor pentru a genera folderul `lib/` curat.
-```bash
-cd functions-codebase-proof
-# Șterge folderul lib vechi dacă există pentru a evita conflictele
-rm -rf lib 
-npm install
-npm run build
-```
-
-### Pasul 2: Transmisia către Proiectul Live
-Revenim în rădăcină și executăm deploy-ul.
-```bash
-cd ..
-firebase deploy --only functions --project vantage-proof-prod
-```
-
-## 3. Troubleshooting
-Dacă primești erori de tip "Could not load the function", verifică:
-1. `functions-codebase-proof/lib/index.js` există după `npm run build`.
-2. `firebase.json` are `"source": "functions-codebase-proof"`.
-3. `package.json` din folderul funcțiilor are `"main": "lib/index.js"`.
-
-## 4. Signatures
-- `[BACKEND_SUBSTRATE_FOUNDRY_ACTIVE]`
-- `[FRANKFURT_NODE_SYNC_READY]`
-- `expert_vouch: "Ioan Ciprian Popa | Certified by European Information Technologies Certification Institute, Brussels, EU"`
