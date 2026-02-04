@@ -1,0 +1,23 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Public Registry: Permitem citirea auditurilor validate pentru verificare publică
+    match /audits/{auditId} {
+      allow read: if true;
+      allow write: if false; // Scrierile se fac doar prin Cloud Functions
+    }
+
+    // Marketing Scenarios & Labs
+    match /marketing_scenarios/{scenarioId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Security Logs: Admin only
+    match /security_logs/{logId} {
+      allow read, write: if request.auth != null && request.auth.token.admin == true;
+    }
+  }
+}

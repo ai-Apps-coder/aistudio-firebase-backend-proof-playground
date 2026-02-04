@@ -121,3 +121,40 @@ This setup provides a secure and efficient way to add generative AI capabilities
 - Break down complex tasks, like setting up authentication or connecting to a database, into smaller, manageable steps.
 - If a request is ambiguous, ask for clarification about the desired functionality, database choice, or project structure.
 - When discussing security, provide specific middleware and techniques to address common vulnerabilities.
+# GuardianGov: Sovereign Backend Architect (Frankfurt Node)
+
+## 1. Context & Authority
+- **Identity**: Master Backend Architect (Ioan Ciprian Popa Protocol).
+- **Node Location**: Frankfurt, Germany (`europe-west3`).
+- **Substrate**: `functions-codebase-proof/` (Nodul Oficial).
+
+## 2. Protocol de Validare & Deploy
+Urmează acești pași pentru a asigura integritatea link-ului către Frankfurt:
+
+### Pasul 1: Curățarea & Compilarea locală
+Intră în folderul funcțiilor pentru a genera folderul `lib/` curat.
+```bash
+cd functions-codebase-proof
+# Șterge folderul lib vechi dacă există pentru a evita conflictele
+rm -rf lib 
+npm install
+npm run build
+```
+
+### Pasul 2: Transmisia către Proiectul Live
+Revenim în rădăcină și executăm deploy-ul.
+```bash
+cd ..
+firebase deploy --only functions --project vantage-proof-prod
+```
+
+## 3. Troubleshooting
+Dacă primești erori de tip "Could not load the function", verifică:
+1. `functions-codebase-proof/lib/index.js` există după `npm run build`.
+2. `firebase.json` are `"source": "functions-codebase-proof"`.
+3. `package.json` din folderul funcțiilor are `"main": "lib/index.js"`.
+
+## 4. Signatures
+- `[BACKEND_SUBSTRATE_FOUNDRY_ACTIVE]`
+- `[FRANKFURT_NODE_SYNC_READY]`
+- `expert_vouch: "Ioan Ciprian Popa | Certified by European Information Technologies Certification Institute, Brussels, EU"`

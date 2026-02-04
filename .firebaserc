@@ -1,0 +1,21 @@
+{
+  "projects": {
+    "default": "vantage-proof-prod"
+  },
+  "targets": {
+    "vantage-proof-prod": {
+      "hosting": {
+        "vantages-app": [
+          "vantages.app"
+        ],
+        "governances-app": [
+          "governances.app"
+        ],
+        "aiacts-app": [
+          "aiacts.app"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

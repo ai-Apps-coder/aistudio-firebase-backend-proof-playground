@@ -1,0 +1,102 @@
+{
+  "hosting": [
+    {
+      "target": "vantages-app",
+      "public": "dist",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "headers": [
+        {
+          "source": "/sitemap.xml",
+          "headers": [
+            { "key": "Content-Type", "value": "application/xml" },
+            { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+          ]
+        },
+        {
+          "source": "/robots.txt",
+          "headers": [
+            { "key": "Content-Type", "value": "text/plain" },
+            { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+          ]
+        }
+      ],
+      "rewrites": [
+        { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+        { "source": "/robots.txt", "destination": "/robots.txt" },
+        { "source": "**", "destination": "/index.html" }
+      ]
+    },
+    {
+      "target": "governances-app",
+      "public": "dist",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "headers": [
+        {
+          "source": "/sitemap.xml",
+          "headers": [
+            { "key": "Content-Type", "value": "application/xml" },
+            { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+          ]
+        },
+        {
+          "source": "/robots.txt",
+          "headers": [
+            { "key": "Content-Type", "value": "text/plain" },
+            { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+          ]
+        }
+      ],
+      "rewrites": [
+        { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+        { "source": "/robots.txt", "destination": "/robots.txt" },
+        { "source": "**", "destination": "/index.html" }
+      ]
+    },
+    {
+      "target": "aiacts-app",
+      "public": "dist",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "headers": [
+        {
+          "source": "/sitemap.xml",
+          "headers": [
+            { "key": "Content-Type", "value": "application/xml" },
+            { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+          ]
+        },
+        {
+          "source": "/robots.txt",
+          "headers": [
+            { "key": "Content-Type", "value": "text/plain" },
+            { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+          ]
+        }
+      ],
+      "rewrites": [
+        { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+        { "source": "/robots.txt", "destination": "/robots.txt" },
+        { "source": "**", "destination": "/index.html" }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "source": "functions-codebase-proof",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "package-lock.json"
+      ]
+    }
+  ],
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}
