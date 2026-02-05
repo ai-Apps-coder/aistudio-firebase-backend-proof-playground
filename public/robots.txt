@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://governances.app/sitemap.xml
-Sitemap: https://eu.aiacts.app/sitemap.xml
-Sitemap: https://aiacts.app/sitemap.xml
 Sitemap: https://vantages.app/sitemap.xml

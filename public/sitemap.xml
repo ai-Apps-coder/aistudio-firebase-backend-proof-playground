@@ -1,51 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- PRIMARY AUTHORITY (governances.app) -->
+  <!-- PRIMARY AUTHORITY (vantages.app) -->
   <url>
-    <loc>https://governances.app/</loc>
-    <lastmod>2025-02-15</lastmod>
+    <loc>https://vantages.app/</loc>
+    <lastmod>2024-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  <url>
-    <loc>https://governances.app/?mode=model-risk</loc>
-    <lastmod>2025-02-15</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://governances.app/?mode=board-vision</loc>
-    <lastmod>2025-02-15</lastmod>
-    <priority>0.9</priority>
-  </url>
 
-  <!-- ACADEMIC NODE (eu.aiacts.app) -->
+  <!-- Consolidated Pages -->
   <url>
-    <loc>https://eu.aiacts.app/</loc>
-    <lastmod>2025-02-15</lastmod>
+    <loc>https://vantages.app/?mode=corporate</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vantages.app/?mode=business</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vantages.app/?mode=ai-news</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://vantages.app/?mode=academy</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://vantages.app/?mode=registry</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://vantages.app/?mode=model-risk</loc>
+    <lastmod>2024-05-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://eu.aiacts.app/?mode=academy</loc>
-    <lastmod>2025-02-15</lastmod>
+    <loc>https://vantages.app/?mode=global</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://eu.aiacts.app/?mode=news-pdf</loc>
-    <lastmod>2025-02-15</lastmod>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- COMPLIANCE NODE (aiacts.app) -->
-  <url>
-    <loc>https://aiacts.app/</loc>
-    <lastmod>2025-02-15</lastmod>
-    <changefreq>daily</changefreq>
+    <loc>https://vantages.app/?mode=board-vision</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://aiacts.app/?mode=audit</loc>
-    <lastmod>2025-02-15</lastmod>
+    <loc>https://vantages.app/?mode=data</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vantages.app/?mode=audit</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://vantages.app/?mode=lab</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://vantages.app/?mode=contact</loc>
+    <lastmod>2024-05-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>
